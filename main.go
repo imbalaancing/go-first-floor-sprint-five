@@ -135,6 +135,9 @@ func (w Walking) Calories() float64 {
 	if w.Duration == 0 {
 		return 0
 	}
+	if w.Height == 0 {
+		return 0
+	}
 	return ((CaloriesWeightMultiplier * w.Weight + (math.Pow(w.meanSpeed() * KmHInMsec, 2) / (w.Height / float64(CmInM))) * CaloriesSpeedHeightMultiplier * w.Weight) * w.Duration.Hours() * MinInHours)
 }
 
@@ -243,5 +246,18 @@ func main() {
 	}
 
 	fmt.Println(ReadData(running))
+
+	walkingTwo := Walking{
+		Training: Training{
+			TrainingType: "Ходьба",
+			Action:       20000,
+			LenStep:      LenStep,
+			Duration:     3*time.Hour + 45*time.Minute,
+			Weight:       0,
+		},
+		Height: 0,
+	}
+
+	fmt.Println(ReadData(walkingTwo))
 
 }
